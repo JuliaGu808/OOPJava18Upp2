@@ -2,6 +2,7 @@
  * Java
  */
 package bankomatdemo;
+import java.util.*;
 
 /**
  *
@@ -13,6 +14,9 @@ public class Server implements Person{
     protected int serverNr;
     private Kund kund;
     
+    Calendar today = Calendar.getInstance();
+    
+    
     public Server(String name, double incomes, int serverNr){
         this.name=name;
         this.incomes=incomes;
@@ -22,7 +26,8 @@ public class Server implements Person{
     public void setLan(Kund k, Loan l){
         kund=k;
         if(k.hasLan(l)){
-            System.out.println("Server " + name + " har beviljat " +
+            System.out.println(Calendar.YEAR +" " + (Calendar.MONTH+1)+ " " + Calendar.DAY_OF_MONTH +
+                    ", Server " + name + " har beviljat " +
                 k.getName() + l.getInfo());
         }
     }
