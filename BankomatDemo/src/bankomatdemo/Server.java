@@ -12,7 +12,6 @@ public class Server implements Person{
     protected String name;
     protected double incomes;
     protected int serverNr;
-    private Kund kund;
     
     Calendar today = Calendar.getInstance();
     
@@ -24,23 +23,19 @@ public class Server implements Person{
     }
     
     public void setLan(Kund k, Loan l){
-        kund=k;
         if(k.hasLan(l)){
-            System.out.println(Calendar.YEAR +" " + (Calendar.MONTH+1)+ " " + Calendar.DAY_OF_MONTH +
-                    ", Server " + name + " har beviljat " +
+            System.out.println( "Server " + name + " har beviljat " +
                 k.getName() + l.getInfo());
         }
     }
     
     public void setLanRan(Kund k, Loan l, double r){
-        kund=k;
         if(k.hasLan(l)){
             l.setRantesats(this, k, r);
         }
     }
     
     public void setKonRan(Kund k, Konton kon, double r){
-        kund=k;
         if(k.hasKon(kon)){
             kon.setRantesats(this, k, r);
         }
