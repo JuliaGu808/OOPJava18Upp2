@@ -12,18 +12,24 @@ import java.util.*;
  */
 public class KundInfo extends PersonInfo{
     
-    List<LocalDate> checkDate = new ArrayList<>();
+    protected LocalDate checkDate;
     
     public KundInfo(String number, String name, LocalDate regDate) {
         super(number, name, regDate);
     }
     
-    public void addDate(LocalDate date){
-        checkDate.add(date);
+    public void setDate(LocalDate checkDate){
+        this.checkDate=checkDate;
+    }
+    public String getNum(){
+        return number;
+    }
+    public LocalDate getDate(){
+        return checkDate;
     }
     @Override
     public String getInfo(){
-        return "Name: " + super.name + "\tTotal: " + checkDate.size() + " times.";
+        return super.name + " , " + number + " , " + checkDate;
     }
     
 }

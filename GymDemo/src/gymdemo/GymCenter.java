@@ -8,6 +8,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.LinkOption;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.*;
 import javax.swing.*;
@@ -25,7 +27,6 @@ public class GymCenter {
         String num=null;
         String name=null;
         LocalDate regDate=null;
-        
         try(BufferedReader br = Files.newBufferedReader(path)){
             while((temp=br.readLine()) != null && !temp.trim().equals("")){
                 num=temp.substring(0, temp.indexOf(",")).trim();
@@ -41,16 +42,14 @@ public class GymCenter {
         }
         return people;
     }
-    
     public static PersonInfo matchKund(String num, List<PersonInfo> allpeople){
         for(PersonInfo p: allpeople){
-            if(p.getNum().equals(num)){
+            if(p.getNum().equals(num.trim()) || p.getName().equals(num.trim())){
                 return p;
             }
         }
         return null;
     }
-    
     public static PersonInfo matchDate(PersonInfo kund){
         int year = LocalDate.now().getYear() -1;
         int month = LocalDate.now().getMonthValue();
@@ -63,23 +62,25 @@ public class GymCenter {
             return null;
         }
     }
-    
     public static List<KundInfo> checked(List<KundInfo> kunder, PersonInfo person){
         KundInfo kund = new KundInfo(person.getNum(), person.getName(), person.getDate());
         LocalDate today = LocalDate.now();
-        if(kunder.contains(kund)){
-            kunder.get(kunder.indexOf(kund)).addDate(today);
-        }
-        else{
-            kunder.add(kund);
-            kund.addDate(today);
-        }
+                kunder.add(kund);
+                kund.setDate(today);
         return kunder;
     }
-    
     public static void writeFile(String src, List<KundInfo> checkPerson){
         Path writePath = Paths.get(src);
-        try(PrintWriter pw = new PrintWriter(Files.newBufferedWriter(writePath, StandardCharsets.UTF_8))){
+        try{
+            if(!Files.exists(writePath, LinkOption.NOFOLLOW_LINKS)){
+                Files.createFile(writePath);
+            }
+        }
+        catch(IOException exc){
+            System.out.println("Error: " + exc);
+        }
+        try(PrintWriter pw = new PrintWriter(Files.newBufferedWriter(writePath, StandardCharsets.UTF_8,
+                                                StandardOpenOption.APPEND))){
             for(KundInfo k: checkPerson){
                 pw.print(k.getInfo()+ "\n");
             }
@@ -88,6 +89,65 @@ public class GymCenter {
             System.out.println("Error: " + exc);
         }
     }
-
-    
+    public static List<CheckInfo> checkFile(String src){
+        Path path = Paths.get(src);
+        List<CheckInfo> trainees = new ArrayList<>();
+        String temp = null;
+        String str = null;
+        String name = null;
+        String num=null;
+        String date=null;
+        try(BufferedReader br = Files.newBufferedReader(path)){
+            while((temp=br.readLine()) != null && !temp.trim().equals("")){
+                name=temp.substring(0, temp.indexOf(",")).trim();
+                str = temp.substring(temp.indexOf(",")+1);
+                num=str.substring(0, str.indexOf(",")).trim();
+                date = str.substring(str.indexOf(",")+1).trim();
+                trainees.add(new CheckInfo(name, num, date));
+            }
+        }
+        catch(IOException exc){
+            System.out.println("Error: " + exc);
+        }
+        return trainees;
+    }
+    public static List<CheckInfo> noSameKund(List<CheckInfo> sameKund){
+        for(int i=0; i<sameKund.size()-1; i++){
+            for(int j=i+1; j<sameKund.size(); j++){
+                if(sameKund.get(i).getNumber().equals(sameKund.get(j).getNumber()) &&
+                       sameKund.get(i).getDate().equals(sameKund.get(j).getDate()) ){
+                    sameKund.remove(j); 
+                    j=j-1;
+                }
+            }
+        }
+        return sameKund;
+    }
+    public static void writeListFile(String src, List<CheckInfo> list){
+        Path writePath = Paths.get(src);
+        try{
+            if(!Files.exists(writePath, LinkOption.NOFOLLOW_LINKS)){
+                Files.createFile(writePath);
+            }
+        }
+        catch(IOException exc){
+            System.out.println("Error: " + exc);
+        }
+        try(PrintWriter pw = new PrintWriter(Files.newBufferedWriter(writePath, StandardCharsets.UTF_8))){
+            for(int i=0; i<list.size(); i++){
+                int count = 1;
+                for(int j=i+1; j<list.size()-1; j++){
+                    if(list.get(i).getNumber().equals(list.get(j).getNumber())){
+                        list.remove(j);
+                        j=j-1;
+                        count += 1;
+                    }
+                }
+                pw.print(list.get(i).getInfo() + count + " times.\n");
+            }
+        }
+        catch(Exception exc){
+            System.out.println("Error: " + exc);
+        }
+    }
 }
