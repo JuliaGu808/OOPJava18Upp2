@@ -136,7 +136,7 @@ public class GymCenter {
         try(PrintWriter pw = new PrintWriter(Files.newBufferedWriter(writePath, StandardCharsets.UTF_8))){
             for(int i=0; i<list.size(); i++){
                 int count = 1;
-                for(int j=i+1; j<list.size()-1; j++){
+                for(int j=i+1; j<list.size(); j++){
                     if(list.get(i).getNumber().equals(list.get(j).getNumber())){
                         list.remove(j);
                         j=j-1;

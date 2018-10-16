@@ -15,6 +15,8 @@ public class GymDemo {
         String readPath = "src\\gymdemo\\customers.txt";            
         String writePath = "src\\gymdemo\\kunders.txt"; 
         String coachPath = "src\\gymdemo\\coach.txt";
+//        String writePath = "src\\gymdemo\\oktperday.txt"; 
+//        String coachPath = "src\\gymdemo\\oktpermonth.txt";
         List<PersonInfo> allpeople = GymCenter.readFile(readPath);
         List<KundInfo> kunder = new ArrayList<>();
         List<CheckInfo> coach = new ArrayList<>();
@@ -33,13 +35,14 @@ public class GymDemo {
             }    
             if(GymCenter.matchKund(num, allpeople) == null){
                 Toolkit.getDefaultToolkit().beep();
-                JOptionPane.showMessageDialog(null, "Ingen meddlem!!!");
+                JOptionPane.showMessageDialog(null, "Unregisted !!!\nJoin us now???");
             }
             else{
                 PersonInfo person = GymCenter.matchKund(num, allpeople);
                 if(GymCenter.matchDate(person) == null){
                     Toolkit.getDefaultToolkit().beep();
-                    JOptionPane.showMessageDialog(null, "Oj! Out of date!!!\n" + person.getInfo());
+                    JOptionPane.showMessageDialog(null, "Oj! Out of date!!!\nContinue your training now???\n" 
+                                                + person.getInfo());
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Hej, dear customer!\n" + person.getInfo());
