@@ -51,7 +51,7 @@ public class GymCenter {
     }
     public static PersonInfo matchKund(String num, List<PersonInfo> allpeople){
         for(PersonInfo p: allpeople){
-            if(p.getNum().equals(num.trim()) || p.getName().equals(num.trim())){
+            if(p.getNum().equals(num.trim()) || p.getName().equalsIgnoreCase(num.trim())){
                 return p;
             }
         }

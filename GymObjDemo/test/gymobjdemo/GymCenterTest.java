@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.junit.Test;
 import java.util.*;
 import junit.framework.TestCase;
@@ -48,6 +49,7 @@ public class GymCenterTest {
         allpeople.add(p8);
         List<PersonInfo> peopletest = GymCenter.readFile(testPath);
         TestCase.assertEquals(allpeople.get(0).getInfo(), peopletest.get(0).getInfo());
+        TestCase.assertEquals(allpeople.get(7).getInfo(), peopletest.get(7).getInfo());
     }
     
     @Test
@@ -57,7 +59,7 @@ public class GymCenterTest {
         allpeople.add(p3);
         allpeople.add(p4);
         String test1 = "1000000001";
-        String test2 = "  Bear Belle  ";
+        String test2 = "  bEar BeLle  ";
         String testwrong = "xxxxxxx";
         String testnull = "";
         TestCase.assertEquals(p1, GymCenter.matchKund(test1, allpeople));
@@ -68,34 +70,41 @@ public class GymCenterTest {
     
     @Test
     public void testMatchDate(){
-        allpeople.add(p2);
-        allpeople.add(p3);
-        allpeople.add(p4);
-        allpeople.add(p5);
-        allpeople.add(p6);
-        allpeople.add(p7);
-        allpeople.add(p8);
-        TestCase.assertNull(GymCenter.matchDate(p2));
-        TestCase.assertNull(GymCenter.matchDate(p3));
+        allpeople.add(p4);  //2017-10-18
+        allpeople.add(p5);  //2017-10-19
+        allpeople.add(p6);  //2017-10-20
+        allpeople.add(p7);  //2018
+        allpeople.add(p8);  //2018
+        TestCase.assertNull(GymCenter.matchDate(p4));
+        //TestCase.assertNull(GymCenter.matchDate(p5));
         TestCase.assertEquals(p6, GymCenter.matchDate(p6));
         TestCase.assertEquals(p5, GymCenter.matchDate(p5));
+        //TestCase.assertEquals(p5, GymCenter.matchDate(p7));
     }
     
     @Test
     public void testChecked(){
         LocalDate d1 = LocalDate.parse("2018-08-18");
-       // LocalDateTime t1 = LocalDateTime.parse("2018-10-10 15:20:25");
-        KundInfo kund1 = new KundInfo("10000000028", "Hilmer H Heur", d1);
+        LocalDateTime t1 = LocalDateTime.now();
+        KundInfo kundexp1 = new KundInfo("10000000028", "Hilmer H Heur", d1);
+        kundexp1.setDateTime(t1);
+        String exptime1 = kundexp1.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         PersonInfo p10 = new PersonInfo("10000000028", "Hilmer H Heur", d1);
-        //kund1.setDateTime(t1);
         LocalDate d2 = LocalDate.parse("2018-08-20");
-        //LocalDateTime t2 = LocalDateTime.parse("2018-10-12 15:20:25");
-        KundInfo kund2 = new KundInfo("10000000027", "Greger H Ganache", d2);
+        LocalDateTime t2 = LocalDateTime.now();
+        KundInfo kundexp2 = new KundInfo("10000000027", "Greger H Ganache", d2);
+        kundexp2.setDateTime(t2);
+        String exptime2 = kundexp2.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         PersonInfo p11 = new PersonInfo("10000000027", "Greger H Ganache", d2);
-       // kund1.setDateTime(t2);
         List<KundInfo> kundlist = new ArrayList<>();
-        TestCase.assertEquals(kund1.getNum(), GymCenter.checked(kundlist, p10).get(0).getNum());
-        TestCase.assertEquals(kund2.getNum(), GymCenter.checked(kundlist, p11).get(1).getNum());
+        kundlist = GymCenter.checked(kundlist, p10);
+        kundlist = GymCenter.checked(kundlist, p11);
+        TestCase.assertEquals(kundexp1.getMesg(), kundlist.get(0).getMesg());
+        String time1 = kundlist.get(0).getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        String time2 = kundlist.get(1).getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        TestCase.assertEquals(kundexp2.getInfo(), kundlist.get(1).getInfo());
+        TestCase.assertEquals(exptime1, time1);
+        TestCase.assertEquals(exptime2, time2);
     }
     
     @Test
@@ -117,15 +126,26 @@ public class GymCenterTest {
         kundlist.add(k6);
         kundlist.add(k7);
         kundlist.add(k8);
+        kundlist.add(k1);
+        kundlist.add(k2);
+        kundlist.add(k3);
+        kundlist.add(k4);
+        kundlist.add(k5);
+        kundlist.add(k6);
+        kundlist.add(k7);
+        kundlist.add(k8);   //total 16. Index 0-15
         TestCase.assertEquals(kundlist.get(4).getMesg(), GymCenter.checkFile(test2Path).get(4).getMesg());
         TestCase.assertEquals(kundlist.get(0).getName(), GymCenter.checkFile(test2Path).get(0).getName());
         TestCase.assertEquals(kundlist.get(7).getNum(), GymCenter.checkFile(test2Path).get(7).getNum());
+        TestCase.assertEquals(kundlist.get(15).getDatetime(), GymCenter.checkFile(test2Path).get(15).getDatetime());
+        TestCase.assertFalse(kundlist.get(7).getNum().equals(GymCenter.checkFile(test2Path).get(8).getNum()));
+        TestCase.assertTrue(kundlist.size() == GymCenter.checkFile(test2Path).size());
     }
     
     @Test
     public void testCountimes(){
         List<KundInfo> kundlist = new ArrayList<>();
-        List<KundInfo> kundlist2 = new ArrayList<>();
+        List<KundInfo> kundlist2 = new ArrayList<>();   //kundlist2 size=0
         List<KundInfo> kundlist3 = new ArrayList<>();
         KundInfo k1 = new KundInfo("Alhambra Aromes" , "1000000001"  ,  "2017-10-15 00:00:00");
         KundInfo k2 = new KundInfo("Bear Belle" , "1000000002",  "2017-10-16 00:00:00");
@@ -135,7 +155,7 @@ public class GymCenterTest {
         KundInfo k6 = new KundInfo("Fritjoff Flacon" , "1000000006", "2017-10-20 00:00:00");
         KundInfo k7 = new KundInfo("Greger Ganache" , "1000000007", "2018-03-23 00:00:00");
         KundInfo k8 = new KundInfo("Hilmer Heur" , "1000000008", "2018-08-18 00:00:00");
-        kundlist3.add(k1);
+        kundlist3.add(k1);  // kundlist3 size=1
         kundlist.add(k1);
         kundlist.add(k2);
         kundlist.add(k3);
@@ -151,7 +171,7 @@ public class GymCenterTest {
         kundlist.add(k5);
         kundlist.add(k6);
         kundlist.add(k7);
-        kundlist.add(k8);
+        kundlist.add(k8);   //kundlist size=16, 2 for each
         String str1 = "";
         String str2 = "";
         String str3 = "";

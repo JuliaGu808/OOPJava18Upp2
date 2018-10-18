@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class KundInfo{
     protected String number;
     protected String name;
-    String datetime;
+    protected String datetime;
     protected LocalDate regDate;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     protected LocalDateTime checkDateTime;
@@ -39,6 +39,9 @@ public class KundInfo{
     }
     public String getName(){
         return name;
+    }
+    public void setDatetime(String datetime){
+        this.datetime=datetime;
     }
     public String getDatetime(){
         return datetime;
