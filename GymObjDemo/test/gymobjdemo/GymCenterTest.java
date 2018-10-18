@@ -35,19 +35,19 @@ public class GymCenterTest {
         PersonInfo p8 = new PersonInfo("1000000008", "Hilmer Heur", d8);
         List<PersonInfo> allpeople = new ArrayList<>();
         
-//    @Test
-//    public void testReadFile(){
-//        allpeople.add(p1);
-//        allpeople.add(p2);
-//        allpeople.add(p3);
-//        allpeople.add(p4);
-//        allpeople.add(p5);
-//        allpeople.add(p6);
-//        allpeople.add(p7);
-//        allpeople.add(p8);
-//        List<PersonInfo> peopletest = GymCenter.readFile(testPath);
-//        TestCase.assertEquals(allpeople.get(0).getInfo(), peopletest.get(0).getInfo());
-//    }
+    @Test
+    public void testReadFile(){
+        allpeople.add(p1);
+        allpeople.add(p2);
+        allpeople.add(p3);
+        allpeople.add(p4);
+        allpeople.add(p5);
+        allpeople.add(p6);
+        allpeople.add(p7);
+        allpeople.add(p8);
+        List<PersonInfo> peopletest = GymCenter.readFile(testPath);
+        TestCase.assertEquals(allpeople.get(0).getInfo(), peopletest.get(0).getInfo());
+    }
 //    
     @Test
     public void testMatchKund(){

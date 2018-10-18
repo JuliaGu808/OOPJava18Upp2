@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Julia
  */
-public class KundInfo {
+public class KundInfo{
     protected String number;
     protected String name;
     String datetime;
@@ -25,7 +25,7 @@ public class KundInfo {
         this.name=name;
         this.regDate=regDate;
     }
-    public KundInfo(String number, String name, String datetime) {
+    public KundInfo(String name, String number, String datetime) {
         this.number=number;
         this.name=name;
         this.datetime=datetime;
@@ -36,6 +36,9 @@ public class KundInfo {
     }
     public String getNum(){
         return number;
+    }
+    public String getName(){
+        return name;
     }
     public String getDatetime(){
         return datetime;
@@ -48,7 +51,7 @@ public class KundInfo {
         return name + " , " + number + " , " + formatter.format(checkDateTime);
     }
     public String getMesg(){
-        return name + " , " + number + " , Total: " ;
+        return name + "\t" + number + "\t" + "Total: " ;
         
     }
 }

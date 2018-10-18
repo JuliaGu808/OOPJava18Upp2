@@ -84,7 +84,7 @@ public class GymCenter {
             }
         }
         catch(IOException exc){
-            System.out.println("Error: " + exc);
+            System.out.println("Error01: " + exc);
         }
         try(PrintWriter pw = new PrintWriter(Files.newBufferedWriter(writePath, StandardCharsets.UTF_8,
                                                 StandardOpenOption.APPEND))){
@@ -93,10 +93,19 @@ public class GymCenter {
             }
         }
         catch(Exception exc){
-            System.out.println("Error: " + exc);
+            System.out.println("Error02: " + exc);
         }
     }
 //    public static void serializeList(List<KundInfo> kundlist, String src){
+//        Path writePath = Paths.get(src);
+//        try{
+//            if(!Files.exists(writePath, LinkOption.NOFOLLOW_LINKS)){
+//                Files.createFile(writePath);
+//            }
+//        }
+//        catch(IOException exc){
+//            System.out.println("Error1: " + exc);
+//        }
 //        try{
 //            FileOutputStream fileOut = new FileOutputStream(src);
 //            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
@@ -106,7 +115,7 @@ public class GymCenter {
 //            fileOut.close();
 //        }
 //        catch(Exception exc){
-//            System.out.println("Error: " + exc);
+//            System.out.println("Error2: " + exc);
 //        }
 //    }
 //    public static List<KundInfo> deSerializeList(String src){
@@ -120,7 +129,7 @@ public class GymCenter {
 //            return eachtime;
 //        }
 //        catch(Exception exc){
-//            System.out.println("Error: " + exc);
+//            System.out.println("Error3: " + exc);
 //        }
 //        return eachtime;
 //    }
@@ -142,7 +151,7 @@ public class GymCenter {
                 }
             }
             catch(IOException exc){
-                System.out.println("Error: " + exc);
+                System.out.println("Error03: " + exc);
             }
             return allcheck;
         }
@@ -154,28 +163,28 @@ public class GymCenter {
             }
         }
         catch(IOException exc){
-            System.out.println("Error: " + exc);
+            System.out.println("Error04: " + exc);
         }
         try(PrintWriter pw = new PrintWriter(Files.newBufferedWriter(writePath, StandardCharsets.UTF_8))){
             for(int i=0; i<kundlist.size(); i++){
                 String eachInfo = 
-                        kundlist.get(i).getDatetime() + "\t";
+                        kundlist.get(i).getDatetime() + "\n";
                 int count = 1;
                 for(int j=i+1; j<kundlist.size(); j++){
                     if(kundlist.get(i).getNum().equals(kundlist.get(j).getNum())){
                         eachInfo = eachInfo + 
-                                kundlist.get(j).getDatetime() + "\t";
+                                kundlist.get(j).getDatetime() + "\n";
                         kundlist.remove(j);
                         j=j-1;
                         count += 1;
                     }
                 }
-                pw.print(kundlist.get(i).getMesg() + count + " times.\n");
-                pw.print(eachInfo + "\n");
+                pw.print(kundlist.get(i).getMesg() + "\tTotal" + count + " times.\n");
+                pw.print(eachInfo );
             }
         }
         catch(Exception exc){
-            System.out.println("Error: " + exc);
+            System.out.println("Error05: " + exc);
         }
     }
            
