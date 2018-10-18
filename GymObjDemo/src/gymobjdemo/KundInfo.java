@@ -51,7 +51,7 @@ public class KundInfo{
         return name + " , " + number + " , " + formatter.format(checkDateTime);
     }
     public String getMesg(){
-        return name + "\t" + number + "\t" + "Total: " ;
+        return name + "\t" + number ;
         
     }
 }

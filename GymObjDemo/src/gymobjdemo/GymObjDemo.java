@@ -16,18 +16,13 @@ public class GymObjDemo {
         String readPath = "src\\gymobjdemo\\customers.txt";            
         String writePath = "src\\gymobjdemo\\checkin.txt"; 
         String friquentPath = "src\\gymobjdemo\\friquent.txt";
-//        String writePath = "src\\gymobjdemo\\oktperday.txt"; 
-//        String friquentPath = "src\\gymobjdemo\\oktpermonth.txt";
         List<PersonInfo> allpeople = GymCenter.readFile(readPath);
         List<KundInfo> kunder = new ArrayList<>();
-//        List<CheckInfo> coach = new ArrayList<>();
-//        List<CheckInfo> noSameK = new ArrayList<>();
         String num;
         boolean again = true;
         while(again){
             num = JOptionPane.showInputDialog("Your number or Your name ?");
             if(num==null || num.trim().equals("")){
-//                GymCenter.serializeList(kunder, writePath);
                 GymCenter.writeFile(writePath, kunder);
                 GymCenter.writeListFile(friquentPath, GymCenter.checkFile(writePath));
                 System.exit(0);
@@ -56,7 +51,7 @@ public class GymObjDemo {
     }
 
     
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args){
        GymObjDemo gym = new GymObjDemo();
     }
 

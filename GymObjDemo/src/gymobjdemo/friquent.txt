@@ -1,19 +1,25 @@
-Bear Belle	8104021234	Total: 	Total2 times.
+Bear Belle	8104021234	Total: 3 times.
 2018-10-18 01:01:16
 2018-10-18 09:43:06
-Diamanda Djedi	7608021234	Total: 	Total2 times.
+2018-10-18 12:26:47
+Diamanda Djedi	7608021234	Total: 3 times.
 2018-10-18 01:01:26
 2018-10-18 09:43:19
-Greger Ganache	1111111111	Total: 	Total3 times.
+2018-10-18 12:27:02
+Greger Ganache	1111111111	Total: 4 times.
 2018-10-18 01:01:35
 2018-10-18 01:10:33
 2018-10-18 09:43:27
-Hilmer Heur	5711121234	Total: 	Total1 times.
+2018-10-18 12:27:13
+Hilmer Heur	5711121234	Total: 2 times.
 2018-10-18 09:43:36
-Liu Lingren	9110261234	Total: 	Total1 times.
+2018-10-18 12:27:28
+Liu Lingren	9110261234	Total: 3 times.
 2018-10-18 09:43:48
-Mitsuko Mayotte	7907281234	Total: 	Total1 times.
+2018-10-18 12:27:43
+2018-10-18 12:27:48
+Mitsuko Mayotte	7907281234	Total: 1 times.
 2018-10-18 09:43:57
-Nahema Ninsson	7805211234	Total: 	Total2 times.
+Nahema Ninsson	7805211234	Total: 2 times.
 2018-10-18 09:44:04
 2018-10-18 09:44:07

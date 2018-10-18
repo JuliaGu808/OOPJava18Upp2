@@ -96,65 +96,28 @@ public class GymCenter {
             System.out.println("Error02: " + exc);
         }
     }
-//    public static void serializeList(List<KundInfo> kundlist, String src){
-//        Path writePath = Paths.get(src);
-//        try{
-//            if(!Files.exists(writePath, LinkOption.NOFOLLOW_LINKS)){
-//                Files.createFile(writePath);
-//            }
-//        }
-//        catch(IOException exc){
-//            System.out.println("Error1: " + exc);
-//        }
-//        try{
-//            FileOutputStream fileOut = new FileOutputStream(src);
-//            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
-//            objectOut.writeObject(kundlist);
-//            //objectOut.flush();
-//            objectOut.close();
-//            fileOut.close();
-//        }
-//        catch(Exception exc){
-//            System.out.println("Error2: " + exc);
-//        }
-//    }
-//    public static List<KundInfo> deSerializeList(String src){
-//        List<KundInfo> eachtime = new ArrayList<>();
-//        try{
-//            FileInputStream fileIn = new FileInputStream(src);
-//            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-//            eachtime = (List<KundInfo>)objectIn.readObject();
-//            objectIn.close();
-//            fileIn.close();
-//            return eachtime;
-//        }
-//        catch(Exception exc){
-//            System.out.println("Error3: " + exc);
-//        }
-//        return eachtime;
-//    }
-        public static List<KundInfo> checkFile(String src){
-            Path path = Paths.get(src);
-            List<KundInfo> allcheck = new ArrayList<>();
-            String temp = null;
-            String str = null;
-            String name = null;
-            String num=null;
-            String datetime=null;
-            try(BufferedReader br = Files.newBufferedReader(path)){
-                while((temp=br.readLine()) != null && !temp.trim().equals("")){
-                    name=temp.substring(0, temp.indexOf(",")).trim();
-                    str = temp.substring(temp.indexOf(",")+1);
-                    num=str.substring(0, str.indexOf(",")).trim();
-                    datetime = str.substring(str.indexOf(",")+1).trim();
-                    allcheck.add(new KundInfo(name, num, datetime));
-                }
+    public static List<KundInfo> checkFile(String src){
+        Path path = Paths.get(src);
+        List<KundInfo> allcheck = new ArrayList<>();
+        String temp = null;
+        String str = null;
+        String name = null;
+        String num=null;
+        String datetime=null;
+        try(BufferedReader br = Files.newBufferedReader(path)){
+            while((temp=br.readLine()) != null && !temp.trim().equals("")){
+                name=temp.substring(0, temp.indexOf(",")).trim();
+                str = temp.substring(temp.indexOf(",")+1);
+                num=str.substring(0, str.indexOf(",")).trim();
+                datetime = str.substring(str.indexOf(",")+1).trim();
+                allcheck.add(new KundInfo(name, num, datetime));
             }
-            catch(IOException exc){
-                System.out.println("Error03: " + exc);
-            }
-            return allcheck;
         }
+        catch(IOException exc){
+            System.out.println("Error03: " + exc);
+        }
+        return allcheck;
+    }
     public static void writeListFile(String src, List<KundInfo> kundlist){
         Path writePath = Paths.get(src);
         try{
@@ -179,13 +142,32 @@ public class GymCenter {
                         count += 1;
                     }
                 }
-                pw.print(kundlist.get(i).getMesg() + "\tTotal" + count + " times.\n");
+                pw.print(kundlist.get(i).getMesg() + "\tTotal: " + count + " times.\n");
                 pw.print(eachInfo );
             }
         }
         catch(Exception exc){
             System.out.println("Error05: " + exc);
         }
+    }
+    public static String countimes(List<KundInfo> kundlist){
+        String str ="";
+        for(int i=0; i<kundlist.size(); i++){
+            String eachInfo = 
+                    kundlist.get(i).getDatetime() + "\n";
+            int count = 1;
+            for(int j=i+1; j<kundlist.size(); j++){
+                if(kundlist.get(i).getNum().equals(kundlist.get(j).getNum())){
+                    eachInfo = eachInfo + 
+                            kundlist.get(j).getDatetime() + "\n";
+                    kundlist.remove(j);
+                    j=j-1;
+                    count += 1;
+                }
+            }
+            str = str + count ;
+        }
+        return str;
     }
            
 }
