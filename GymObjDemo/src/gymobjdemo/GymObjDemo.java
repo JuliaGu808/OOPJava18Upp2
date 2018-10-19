@@ -16,6 +16,8 @@ public class GymObjDemo {
         String readPath = "src\\gymobjdemo\\customers.txt";            
         String writePath = "src\\gymobjdemo\\checkin.txt"; 
         String friquentPath = "src\\gymobjdemo\\friquent.txt";
+//        String writePath = "src\\gymobjdemo\\testPath1.txt"; 
+//        String friquentPath = "src\\gymobjdemo\\testPath2.txt";
         List<PersonInfo> allpeople = GymCenter.readFile(readPath);
         List<KundInfo> kunder = new ArrayList<>();
         String num;

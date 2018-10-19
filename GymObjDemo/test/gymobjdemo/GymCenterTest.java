@@ -61,11 +61,14 @@ public class GymCenterTest {
         String test1 = "1000000001";
         String test2 = "  bEar BeLle  ";
         String testwrong = "xxxxxxx";
-        String testnull = "";
+//        String testtom = "";  //behöve inte, fånga i början
+//        String testnull = null;
+//        p5 = GymCenter.matchKund(testnull, allpeople);
+//        TestCase.assertNull(GymCenter.matchKund(testtom, allpeople));
+//        TestCase.assertNull(p5);
         TestCase.assertEquals(p1, GymCenter.matchKund(test1, allpeople));
         TestCase.assertEquals(p2, GymCenter.matchKund(test2, allpeople));
         TestCase.assertNull(GymCenter.matchKund(testwrong, allpeople));
-        TestCase.assertNull(GymCenter.matchKund(testnull, allpeople));
     }
     
     @Test
@@ -76,10 +79,9 @@ public class GymCenterTest {
         allpeople.add(p7);  //2018
         allpeople.add(p8);  //2018
         TestCase.assertNull(GymCenter.matchDate(p4));
-        //TestCase.assertNull(GymCenter.matchDate(p5));
+        TestCase.assertNull(GymCenter.matchDate(p5));
         TestCase.assertEquals(p6, GymCenter.matchDate(p6));
-        TestCase.assertEquals(p5, GymCenter.matchDate(p5));
-        //TestCase.assertEquals(p5, GymCenter.matchDate(p7));
+        TestCase.assertEquals(p7, GymCenter.matchDate(p7));
     }
     
     @Test
